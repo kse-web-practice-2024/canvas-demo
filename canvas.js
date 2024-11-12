@@ -4,12 +4,17 @@ export class Canvas {
         this.ctx = element.getContext('2d');
         this.ctx.canvas.width = width;
         this.ctx.canvas.height = height;
-        this.ctx.lineWidth = 5;
+    }
+
+    get element() {
+        return this.ctx.canvas;
     }
 
     draw(path) {
-        path.forEach(({ x, y, color }, index) => {
+        this.ctx.beginPath();
+        path.forEach(({ x, y, color, lineWidth }, index) => {
             this.ctx.strokeStyle = color;
+            this.ctx.lineWidth = lineWidth;
 
             if (index === 0) {
                 this.ctx.moveTo(x, y);

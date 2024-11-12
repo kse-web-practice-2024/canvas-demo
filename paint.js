@@ -14,11 +14,16 @@ export class Paint {
 
     constructor(canvas) {
         this.canvas = canvas;
-        document.addEventListener('mousemove', (event) => {
+        this.canvas.element.addEventListener('mousemove', (event) => {
             if (this.state === ACTIVE) {
-                this.currentPath.push({ x: event.offsetX, y: event.offsetY, color: this.mode === DRAW ? '#000' : '#fff' });
+                this.currentPath.push({
+                    x: event.offsetX,
+                    y: event.offsetY,
+                    color: this.mode === DRAW ? '#000' : '#fff',
+                    lineWidth: this.mode === DRAW ? 5 : 30
+                });
 
-                canvas.draw(this.currentPath);
+                this.canvas.draw(this.currentPath);
             }
         })
 
@@ -26,13 +31,15 @@ export class Paint {
     }
 
     initState() {
-        document.addEventListener('mousedown', () => {
+        this.canvas.element.addEventListener('mousedown', () => {
             this.state = ACTIVE;
         })
 
-        document.addEventListener('mouseup', () => {
+        this.canvas.element.addEventListener('mouseup', () => {
             this.state = IDLE;
-            this.allPaths.push(this.currentPath);
+            if (this.currentPath.length) {
+                this.allPaths.push(this.currentPath);
+            }
             this.currentPath = [];
         })
     }

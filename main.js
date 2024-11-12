@@ -15,13 +15,17 @@ undoButton.addEventListener('click', () => {
 })
 
 const eraseButton = document.querySelector('.erase-button-js');
+const drawButton = document.querySelector('.draw-button-js');
 
 eraseButton.addEventListener('click', () => {
     paint.changeModeToErase();
+    eraseButton.classList.add('active');
+    drawButton.classList.remove('active');
 })
 
-const drawButton = document.querySelector('.draw-button-js');
 
 drawButton.addEventListener('click', () => {
     paint.changeModeToDraw();
+    drawButton.classList.add('active');
+    eraseButton.classList.remove('active');
 })
